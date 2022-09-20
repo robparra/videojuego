@@ -163,6 +163,91 @@ class HackNSlashDemo {
     }));
     this._entityManager.Add(axe);
 
+    const axe2 = new entity.Entity();
+    axe2.AddComponent(new inventory_controller.InventoryItem({
+        type: 'weapon',
+        damage: 3,
+        renderParams: {
+          name: 'Axe2',
+          scale: 2.0,
+          icon: 'war-axe-64.png',
+        },
+    }));
+    this._entityManager.Add(axe2);
+    
+
+    const axe3 = new entity.Entity();
+    axe3.AddComponent(new inventory_controller.InventoryItem({
+        type: 'weapon',
+        damage: 3,
+        renderParams: {
+          name: 'Axe3',
+          scale: 2.0,
+          icon: 'war-axe-64.png',
+        },
+    }));
+    this._entityManager.Add(axe3);
+
+    const axe4 = new entity.Entity();
+    axe4.AddComponent(new inventory_controller.InventoryItem({
+        type: 'weapon',
+        damage: 3,
+        renderParams: {
+          name: 'Axe4',
+          scale: 2.0,
+          icon: 'war-axe-64.png',
+        },
+    }));
+    this._entityManager.Add(axe4);
+
+    const hammer = new entity.Entity();
+    hammer.AddComponent(new inventory_controller.InventoryItem({
+        type: 'weapon',
+        damage: 3,
+        renderParams: {
+          name: 'Hammer_Double',
+          scale: 0.25,
+          icon: 'hammer-weapon.png',
+        },
+    }));
+    this._entityManager.Add(hammer);
+
+    const hammer2 = new entity.Entity();
+    hammer2.AddComponent(new inventory_controller.InventoryItem({
+        type: 'weapon',
+        damage: 3,
+        renderParams: {
+          name: 'Hammer_Double2',
+          scale: 1.25,
+          icon: 'hammer-weapon.png',
+        },
+    }));
+    this._entityManager.Add(hammer2);
+
+    const hammer3 = new entity.Entity();
+    hammer3.AddComponent(new inventory_controller.InventoryItem({
+        type: 'weapon',
+        damage: 3,
+        renderParams: {
+          name: 'Hammer_Double3',
+          scale: 0.25,
+          icon: 'hammer-weapon.png',
+        },
+    }));
+    this._entityManager.Add(hammer3);
+
+    const hammer4 = new entity.Entity();
+    hammer4.AddComponent(new inventory_controller.InventoryItem({
+        type: 'weapon',
+        damage: 3,
+        renderParams: {
+          name: 'Hammer_Double4',
+          scale: 1.25,
+          icon: 'hammer-weapon.png',
+        },
+    }));
+    this._entityManager.Add(hammer4);
+
     const sword = new entity.Entity();
     sword.AddComponent(new inventory_controller.InventoryItem({
         type: 'weapon',
@@ -174,6 +259,30 @@ class HackNSlashDemo {
         },
     }));
     this._entityManager.Add(sword);
+
+    const sword2 = new entity.Entity();
+    sword2.AddComponent(new inventory_controller.InventoryItem({
+        type: 'weapon',
+        damage: 3,
+        renderParams: {
+          name: 'Sword2',
+          scale: 2.0,
+          icon: 'pointy-sword-64.png',
+        },
+    }));
+    this._entityManager.Add(sword2);
+
+    const sword3 = new entity.Entity();
+    sword3.AddComponent(new inventory_controller.InventoryItem({
+        type: 'weapon',
+        damage: 3,
+        renderParams: {
+          name: 'Sword3',
+          scale: 2.0,
+          icon: 'pointy-sword-64.png',
+        },
+    }));
+    this._entityManager.Add(sword3);
 
     const player = new entity.Entity();
     player.AddComponent(new player_input.BasicCharacterControllerInput(params));
@@ -204,10 +313,64 @@ class HackNSlashDemo {
     });
 
     player.Broadcast({
+      topic: 'inventory.add',
+      value: axe2.Name,
+      added: false,
+  });
+
+    player.Broadcast({
+      topic: 'inventory.add',
+      value: axe3.Name,
+      added: false,
+  });
+
+    player.Broadcast({
+      topic: 'inventory.add',
+      value: axe4.Name,
+      added: false,
+  });
+
+    player.Broadcast({
+      topic: 'inventory.add',
+      value: hammer.Name,
+      added: false,
+  });
+
+    player.Broadcast({
+      topic: 'inventory.add',
+      value: hammer2.Name,
+      added: false,
+  });
+
+    player.Broadcast({
+      topic: 'inventory.add',
+      value: hammer3.Name,
+      added: false,
+  });
+
+    player.Broadcast({
+      topic: 'inventory.add',
+      value: hammer4.Name,
+      added: false,
+  });
+
+    player.Broadcast({
         topic: 'inventory.add',
         value: sword.Name,
         added: false,
     });
+
+    player.Broadcast({
+      topic: 'inventory.add',
+      value: sword2.Name,
+      added: false,
+  });
+
+    player.Broadcast({
+      topic: 'inventory.add',
+      value: sword3.Name,
+      added: false,
+  });
 
     player.Broadcast({
         topic: 'inventory.equip',

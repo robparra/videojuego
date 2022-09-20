@@ -1,7 +1,10 @@
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.124/build/three.module.js';
+
 import {entity} from './entity.js';
 
 import {FBXLoader} from 'https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/FBXLoader.js';
 
+import {defs} from '/shared/defs.mjs';
 
 export const equip_weapon_component = (() => {
 
@@ -11,6 +14,10 @@ export const equip_weapon_component = (() => {
       this._params = params;
       this._target = null;
       this._name = null;
+
+      // const classType = this._params.desc.character.class;
+      // const modelData = defs.CHARACTER_MODELS[classType];
+      // this.anchor_ = modelData.anchors.rightHand;
     }
 
     InitComponent() {
@@ -31,6 +38,12 @@ export const equip_weapon_component = (() => {
       if (this._bones && this._target) {
         this._bones[this._params.anchor].add(this._target);
       }
+    }
+
+    GetItemDefinition_(name) {
+      const database = this.FindEntity('database').GetComponent(
+          'InventoryDatabaseController');
+      return database.Find(name);
     }
 
     _OnEquip(msg) {
@@ -68,11 +81,14 @@ export const equip_weapon_component = (() => {
         this._target.rotateX(-Math.PI / 3);
         this._target.rotateY(-1);
 
+        
+
         this._target.traverse(c => {
           c.castShadow = true;
           c.receiveShadow = true;
         });
 
+       
         cb();
 
         this.Broadcast({
