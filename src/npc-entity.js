@@ -173,9 +173,9 @@ export const npc_entity = (() => {
         if (!h) {
           return false;
         }
-        if (c.entity.Name != 'player') {
-          return false;
-        }
+        // if (c.entity.Name != 'player') {
+        //   return false;
+        // }
         return h._health > 0;
       };
 

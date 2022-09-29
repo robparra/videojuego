@@ -289,6 +289,8 @@ class HackNSlashDemo {
     player.AddComponent(new player_entity.BasicCharacterController(params));
     player.AddComponent(
       new equip_weapon_component.EquipWeapon({anchor: 'RightHandIndex1'}));
+      player.AddComponent(
+        new equip_weapon_component.EquipWeapon({anchor: 'LeftHandIndex1'}));
     player.AddComponent(new inventory_controller.InventoryController(params));
     player.AddComponent(new health_component.HealthComponent({
         updateUI: true,
@@ -385,7 +387,7 @@ class HackNSlashDemo {
             target: this._entityManager.Get('player')}));
     this._entityManager.Add(camera, 'player-camera');
 
-    for (let i = 0; i < 1; ++i) {
+    for (let i = 0; i < 3; ++i) {
       const monsters = [
         {
           resourceName: 'Ghost.fbx',
@@ -399,20 +401,21 @@ class HackNSlashDemo {
           resourceName: 'Skull.fbx',
           resourceTexture: 'Skull_Texture.png',
         },
-        {
-          resourceName: 'GreenDemon.fbx',
-          resourceTexture: 'GreenDemon_Texture.png',
-        },
-        {
-          resourceName: 'Cyclops.fbx',
-          resourceTexture: 'Cyclops_Texture.png',
-        },
-        {
-          resourceName: 'Cactus.fbx',
-          resourceTexture: 'Cactus_Texture.png',
-        },
+        // {
+        //   resourceName: 'GreenDemon.fbx',
+        //   resourceTexture: 'GreenDemon_Texture.png',
+        // },
+        // {
+        //   resourceName: 'Cyclops.fbx',
+        //   resourceTexture: 'Cyclops_Texture.png',
+        // },
+        // {
+        //   resourceName: 'Cactus.fbx',
+        //   resourceTexture: 'Cactus_Texture.png',
+        // },
       ];
-      const m = monsters[math.rand_int(0, monsters.length - 1)];
+      const m = monsters[i];
+      // math.rand_int(0, monsters.length - 1)
 
       const npc = new entity.Entity();
       npc.AddComponent(new npc_entity.NPCController({
