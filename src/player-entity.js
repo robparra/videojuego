@@ -246,6 +246,7 @@ export const player_entity = (() => {
   };
   
   return {
+      CharacterFSM: CharacterFSM,
       BasicCharacterControllerProxy: BasicCharacterControllerProxy,
       BasicCharacterController: BasicCharacterController,
   };

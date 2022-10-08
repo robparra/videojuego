@@ -8,6 +8,7 @@ import {gltf_component} from './gltf-component.js';
 import {health_component} from './health-component.js';
 import {player_input} from './player-input.js';
 import {npc_entity} from './npc-entity.js';
+import {npc_entity2} from './npc-entity2.js';
 import {math} from './math.js';
 import {spatial_hash_grid} from './spatial-hash-grid.js';
 import {ui_controller} from './ui-controller.js';
@@ -65,9 +66,10 @@ class HackNSlashDemo {
     light.shadow.camera.right = -100;
     light.shadow.camera.top = 100;
     light.shadow.camera.bottom = -100;
-    this._scene.add(light);
+    // this._scene.add(light);
 
-    
+    let light2 = new THREE.AmbientLight(0xFFFFFF, 1.0);
+    this._scene.add(light2);
 
     this._sun = light;
 
@@ -90,7 +92,7 @@ class HackNSlashDemo {
     plane.castShadow = false;
     plane.receiveShadow = true;
     plane.rotation.x = -Math.PI / 2;
-    this._scene.add(plane);
+    // this._scene.add(plane);
 
     this._entityManager = new entity_manager.EntityManager();
     this._grid = new spatial_hash_grid.SpatialHashGrid(
@@ -99,6 +101,8 @@ class HackNSlashDemo {
     this._LoadControllers();
     this._LoadPlayer();
     this._LoadClouds();
+    // this._LoadFoliage();
+   this._LoadCastle() 
 
     this.totalTime_ = 0.0;
 
@@ -136,6 +140,44 @@ class HackNSlashDemo {
       e.SetActive(false);
     }
   }
+
+  _LoadCastle() {
+      const e = new entity.Entity();
+      e.AddComponent(new gltf_component.StaticModelComponent({
+        scene: this._scene,
+        resourcePath: './resources/castle/',
+        resourceName: 'castle.gltf',
+        // position: pos,
+        scale: 3.25,
+        emissive: new THREE.Color(0x808080),
+        specular: new THREE.Color(0x000000),
+        receiveShadow: true,
+        castShadow: true,
+      }));
+      // e.SetPosition(pos);
+      this._entityManager.Add(e);
+      e.SetActive(false);
+    }
+  
+
+  _LoadFoliage() {
+      const e = new entity.Entity();
+      e.AddComponent(new gltf_component.StaticModelComponent({
+        scene: this._scene,
+        resourcePath: './resources/castle/',
+        resourceName: 'Castle.fbx',
+        scale: 3.25,
+        emissive: new THREE.Color(0x000000),
+        specular: new THREE.Color(0x000000),
+        receiveShadow: true,
+        castShadow: true,
+      }));
+      
+      // e.SetPosition(pos);
+      this._entityManager.Add(e);
+      e.SetActive(false);
+    }
+  
 
 
   _LoadPlayer() {
@@ -380,6 +422,8 @@ class HackNSlashDemo {
         added: false,
     });
 
+    
+
     const camera = new entity.Entity();
     camera.AddComponent(
         new third_person_camera.ThirdPersonCamera({
@@ -450,6 +494,53 @@ class HackNSlashDemo {
           (Math.random() * 2 - 1) * 100));
       this._entityManager.Add(npc);
     }
+
+    const npc2 = new entity.Entity();
+      npc2.AddComponent(new npc_entity2.NPCController2({
+          camera: this._camera,
+          scene: this._scene,
+      }));
+      npc2.AddComponent(
+        new equip_weapon_component.EquipWeapon({anchor: 'RightHandIndex1'}));
+      npc2.AddComponent(
+          new health_component.HealthComponent({
+              health: 50,
+              maxHealth: 50,
+              strength: 2,
+              wisdomness: 2,
+              benchpress: 3,
+              curl: 1,
+              experience: 0,
+              level: 1,
+              camera: this._camera,
+              scene: this._scene,
+          }));
+      npc2.AddComponent(
+          new spatial_grid_controller.SpatialGridController({grid: this._grid}));
+      npc2.AddComponent(new health_bar.HealthBar({
+          parent: this._scene,
+          camera: this._camera,
+      }));
+      npc2.AddComponent(new inventory_controller.InventoryController(params));
+      npc2.AddComponent(new attack_controller.AttackController({timing: 0.35}));
+      npc2.SetPosition(new THREE.Vector3(
+          (Math.random() * 2 - 1) * 100,
+          0,
+          (Math.random() * 2 - 1) * 100));
+      this._entityManager.Add(npc2,'npc2');
+
+    //   npc2.Broadcast({
+    //     topic: 'inventory.add',
+    //     value: sword.Name,
+    //     added: false,
+    // });
+    //   npc2.Broadcast({
+    //     topic: 'inventory.equip',
+    //     value: sword.Name,
+    //     added: false,
+    // });
+    
+    
   }
 
   _OnWindowResize() {
